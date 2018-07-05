@@ -1,10 +1,12 @@
 class Api::V1::SearchHistoriesController < ApplicationController
   def index
-    @search_histories = SearchHistory.all
-    render json: @earch_histories
+    @all_histories = SearchHistory.all
+    render json: @all_histories
   end
 
   def show
+    @search_histories = User.find(params[:id])
+    render json: @search_histories
   end
 
   def create
