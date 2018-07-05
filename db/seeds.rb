@@ -6,4 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create(username: 'shun', name: 'Shun Yao')
+user1 = User.create(username: 'shun', name: 'Shun Yao')
+user1.search_histories.create(asset: 'fb')
+user1.watchlists.create(name: 'My Watchlist', asset_id: 'FB')
