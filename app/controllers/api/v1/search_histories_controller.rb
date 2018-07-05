@@ -5,13 +5,19 @@ class Api::V1::SearchHistoriesController < ApplicationController
   end
 
   def show
-    @search_histories = User.find(params[:id])
-    render json: @search_histories
+    @search_histories = User.find(1).search_histories
+    @symbols = []
+    @search_histories.each do |history|
+      @symbols << Asset.all.find{|asset| asset.id == history.id}.symbol
+    end
+    render json: @symbols
   end
 
   def create
-    byebug
-    @new_search = SearchHistory.create(params['keyword'])
+    #byebug
+    @user = User.find(1)
+    @asset = Asset.find_or_create_by(symbol: params['keyword'].upcase)
+    @new_search = @user.search_histories.find_or_create_by(asset_id: @asset.id)
     render json: @new_search
   end
 
