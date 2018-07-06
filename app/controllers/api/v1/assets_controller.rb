@@ -11,6 +11,6 @@ class Api::V1::AssetsController < ApplicationController
   def update
   end
 
-  def delete
+  def destroy
   end
 end
