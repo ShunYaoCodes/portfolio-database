@@ -8,7 +8,7 @@ class Api::V1::WatchlistsController < ApplicationController
     @watchlist = User.find(params[:id]).watchlists
     @symbols = []
     @watchlist.each do |history|
-      @symbols << Asset.all.find{|asset| asset.id == history.id}.symbol
+      @symbols << Asset.all.find{|asset| asset.id == history.asset_id}.symbol
     end
     render json: @symbols
   end
