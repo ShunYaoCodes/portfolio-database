@@ -8,7 +8,7 @@ class Api::V1::PortfolioAssetsController < ApplicationController
     @portfolio_asset = User.find(params[:id]).portfolio_assets
     @symbols = []
     @portfolio_asset.each do |history|
-      @symbols << Asset.all.find{|asset| asset.id == history.asset_id}.symbol
+      @symbols << {symbol: Asset.all.find{|asset| asset.id == history.asset_id}.symbol, position_type: history.position_type} 
     end
     render json: @symbols
   end
