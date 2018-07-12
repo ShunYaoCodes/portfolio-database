@@ -26,7 +26,7 @@ class Api::V1::PortfolioAssetsController < ApplicationController
     @portfolio_asset = @user.portfolio_assets.find_by(asset_id: @asset.id)
     @portfolio_asset[:position_type] = params['position_type']
     @portfolio_asset.save
-    render json: @portfolio_asset
+    #byebug
   end
 
   def destroy
