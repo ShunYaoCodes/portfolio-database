@@ -14,6 +14,12 @@ Master
 ## Installation
 1. git clone https://github.com/rainANDshine/portfolio-database
 
+2. bundle
+
+3. rails db:migrate db:seed
+
+4. rails s -p 3001 *(currently Port 3001 is what my back-end server uses and where my front-end server fetches through)*
+
 ## Credits
 Solo full-stack project built by [Shun Yao](https://github.com/rainANDshine)
 
