@@ -20,8 +20,8 @@ Master
 
 4. rails s -p 3001 *(currently Port 3001 is what my back-end server uses and where my front-end server fetches through)*
 
-## Credits
-Solo full-stack project built by [Shun Yao](https://github.com/rainANDshine)
+## Youtube Video Demo
+https://www.youtube.com/watch?v=4jI4vCN9ws0&t=7s
 
 ## Screenshots
 <img src="1.png" alt="1">
@@ -29,6 +29,9 @@ Solo full-stack project built by [Shun Yao](https://github.com/rainANDshine)
 <img src="3.png" alt="3">
 <img src="4.png" alt="4">
 <img src="5.png" alt="5">
+
+## Credits
+Solo full-stack project built by [Shun Yao](https://github.com/rainANDshine)
 
 ## License
 MIT ©
