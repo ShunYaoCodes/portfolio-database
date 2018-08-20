@@ -20,6 +20,9 @@ Master
 
 4. rails s -p 3001 *(currently Port 3001 is what my back-end server uses and where my front-end server fetches through)*
 
+## Live App
+https://portfolio-manager-1.herokuapp.com/
+
 ## Youtube Video Demo
 https://www.youtube.com/watch?v=4jI4vCN9ws0&t=7s
 
