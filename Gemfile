@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem "rack", ">= 2.0.6"
+gem "loofah", ">= 2.2.3"
 
 ruby '2.4.4'
 
