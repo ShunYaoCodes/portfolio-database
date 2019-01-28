@@ -38,3 +38,9 @@ Solo full-stack project built by [Shun Yao](https://github.com/rainANDshine)
 
 ## License
 MIT ©
+
+-------------------------
+.env looks like this:
+```
+JWT_SECRET=some string
+```
