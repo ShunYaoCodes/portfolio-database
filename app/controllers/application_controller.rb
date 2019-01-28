@@ -11,7 +11,7 @@ class ApplicationController < ActionController::API
         }
 
         # IMPORTANT: set nil as password parameter
-        JWT.encode payload, get_secret(), 'HS256'
+        JWT.encode payload, get_secret, 'HS256'
     end
 
     def get_token
@@ -19,9 +19,9 @@ class ApplicationController < ActionController::API
     end
 
     def get_decoded_token
-        token = get_token()
+        token = get_token
         begin
-            decoded_token = JWT.decode token, get_secret(), true, { algorithm: 'HS256' }
+            decoded_token = JWT.decode token, get_secret, true, { algorithm: 'HS256' }
             # Check decoded_token payload for expiration date.
         rescue JWT::DecodeError
             return nil

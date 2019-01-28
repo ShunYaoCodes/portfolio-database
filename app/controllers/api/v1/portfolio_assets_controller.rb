@@ -1,7 +1,17 @@
 class Api::V1::PortfolioAssetsController < ApplicationController
+  before_action :requires_login, only: [:index]
+
   def index
-    @portfolio_assets = PortfolioAsset.all
-    render json: @portfolio_assets
+    # decode with the secret and the param set to true
+    # get token from headers in request
+    if is_authenticated?
+      render json: PortfolioAsset.all
+    else
+      render json: {
+        message: "No good"
+      }, status: :unauthorized
+    end
+    #render json: PortfolioAsset.all
   end
 
   def show

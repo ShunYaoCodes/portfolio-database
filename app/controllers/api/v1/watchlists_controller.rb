@@ -1,7 +1,17 @@
 class Api::V1::WatchlistsController < ApplicationController
+  before_action :requires_login, only: [:index]
+
   def index
-    @watchlists = Watchlist.all
-    render json: @watchlists
+    # decode with the secret and the param set to true
+    # get token from headers in request
+    if is_authenticated?
+      render json: Watchlist.all
+    else
+      render json: {
+        message: "No good"
+      }, status: :unauthorized
+    end
+    #render json: Watchlist.all
   end
 
   def show
