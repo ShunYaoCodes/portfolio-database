@@ -47,7 +47,7 @@ class ApplicationController < ActionController::API
         # byebug
         if @user.id != get_decoded_token[0]["id"]
             render json: {
-            message: "Not your snacks!!!!!! Treat yourself!"
+            message: "No Access"
             }, status: :unauthorized
         end
     end    
