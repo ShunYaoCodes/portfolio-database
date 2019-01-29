@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :search_histories, only: [:index, :show, :create, :destroy]
       resources :users, only: [:index, :show, :create, :update, :destroy]
 
+      post '/sessions', to: 'sessions#create'
       get '/users/:user_id/search_histories', to: 'users#user_search_histories'
       get '/users/:user_id/watchlists', to: 'users#user_watchlists'
       get '/users/:user_id/portfolio_assets', to: 'users#portfolio_assets'
