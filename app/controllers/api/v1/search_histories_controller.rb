@@ -2,16 +2,7 @@ class Api::V1::SearchHistoriesController < ApplicationController
   before_action :requires_login, only: [:index]
 
   def index
-    # decode with the secret and the param set to true
-    # get token from headers in request
-    if is_authenticated?
-      render json: SearchHistory.all
-    else
-      render json: {
-        message: "No good"
-      }, status: :unauthorized
-    end
-    #render json: SearchHistory.all
+    render json: SearchHistory.all
   end
 
   def show
