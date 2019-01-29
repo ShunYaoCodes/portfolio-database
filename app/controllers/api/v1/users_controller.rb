@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :requires_login, only: [:user_search_histories, :user_watchlists, :user_portfolio_assets]
-  before_action :requires_user_match, only: [:user_search_histories, :user_watchlists, :user_portfolio_assets]
+  before_action :requires_login, only: [:user_watchlists, :user_portfolio_assets]
+  before_action :requires_user_match, only: [:user_watchlists, :user_portfolio_assets]
 
   def create
     @user = User.new
@@ -22,9 +22,9 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def user_search_histories
-    render json: @user.search_histories
-  end
+  # def user_search_histories
+  #   render json: @user.search_histories
+  # end
 
   def user_watchlists
     render json: @user.watchlists

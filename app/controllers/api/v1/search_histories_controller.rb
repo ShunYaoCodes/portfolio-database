@@ -1,5 +1,5 @@
 class Api::V1::SearchHistoriesController < ApplicationController
-  before_action :requires_login, only: [:index]
+  # before_action :requires_login, only: [:index]
 
   def index
     render json: SearchHistory.all
