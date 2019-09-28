@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem "rack", ">= 2.0.6"
 gem "loofah", ">= 2.2.3"
 
-ruby '2.4.4'
+ruby '2.6.4'
 
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 
