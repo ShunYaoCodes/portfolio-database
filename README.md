@@ -33,6 +33,10 @@ https://www.youtube.com/watch?v=4jI4vCN9ws0&t=7s
 <img src="4.png" alt="4">
 <img src="5.png" alt="5">
 
+## .env looks like this:
+
+JWT_SECRET=asdfasdfjhadjklfhdaks;lfjdjklafhkds
+
 ## Credits
 Solo full-stack project built by [Shun Yao](https://github.com/rainANDshine)
 
