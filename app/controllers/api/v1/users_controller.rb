@@ -19,6 +19,7 @@ class Api::V1::UsersController < ApplicationController
 
     @user.username = params[:username]
     @user.password = params[:password]
+    @user.password_confirmation = params[:password_confirmation]
 
     if (@user.save)
       token = generate_token
