@@ -1,4 +1,6 @@
 class Api::V1::SearchHistoriesController < ApplicationController
+  before_action :requires_login, only: [:create]
+
   def index
     @all_histories = SearchHistory.all
     render json: @all_histories
@@ -14,8 +16,8 @@ class Api::V1::SearchHistoriesController < ApplicationController
   end
 
   def create
-    @user = User.find(1)
-    @asset = Asset.find_or_create_by(symbol: params['keyword'].upcase)
+    @user = User.find(params[:userId])
+    @asset = Asset.find_or_create_by(symbol: params[:keyword].upcase)
     @find = @user.search_histories.find_by(asset_id: @asset.id)
 
     if @find
