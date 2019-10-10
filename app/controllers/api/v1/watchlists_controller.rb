@@ -1,5 +1,5 @@
 class Api::V1::WatchlistsController < ApplicationController
-  before_action :requires_login, only: [:create]
+  before_action :requires_login
 
   def index
     if (params[:user_id])
@@ -7,7 +7,7 @@ class Api::V1::WatchlistsController < ApplicationController
       @symbols = []
 
       @watchlist.each do |history|
-        @symbols << Asset.all.find{|asset| asset.id == history.asset_id}.symbol
+        @symbols << [[:id, history.id], [:symbol, Asset.all.find{|asset| asset.id == history.asset_id}.symbol]].to_h
       end
 
       render json: @symbols
@@ -27,20 +27,25 @@ class Api::V1::WatchlistsController < ApplicationController
   end
 
   def create
-    @user = User.find(params[:userId])
-    @asset = Asset.find_or_create_by(symbol: params['symbol'].upcase)
+    @user = User.find(params[:user_id])
+    @asset = Asset.find_or_create_by(symbol: params[:symbol].upcase)
     @new_search = @user.watchlists.find_or_create_by(asset_id: @asset.id)
 
-    render json: @new_search
+    render json: {
+      id: @new_search.id, 
+      symbol: params[:symbol].upcase
+    }
   end
 
   def update
   end
 
   def destroy
-    @watchlist = User.find(params[:id]).watchlists
-    @asset = Asset.find_by(symbol: params['symbol'])
-    @symbol = @watchlist.find_by(asset_id: @asset.id)
+    # @watchlist = User.find(params[:user_id]).watchlists
+    # @asset = Asset.find_by(symbol: params[:id])
+    @symbol = Watchlist.find(params[:id])
     @symbol.destroy
+
+    render json: {}
   end
 end
