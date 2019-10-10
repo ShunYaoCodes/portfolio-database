@@ -1,7 +1,20 @@
 class Api::V1::WatchlistsController < ApplicationController
+  before_action :requires_login, only: [:create]
+
   def index
-    @watchlists = Watchlist.all
-    render json: @watchlists
+    if (params[:user_id])
+      @watchlist = User.find(params[:user_id]).watchlists
+      @symbols = []
+
+      @watchlist.each do |history|
+        @symbols << Asset.all.find{|asset| asset.id == history.asset_id}.symbol
+      end
+
+      render json: @symbols
+    else
+      @watchlists = Watchlist.all
+      render json: @watchlists
+    end
   end
 
   def show
@@ -14,7 +27,7 @@ class Api::V1::WatchlistsController < ApplicationController
   end
 
   def create
-    @user = User.find(1)
+    @user = User.find(params[:userId])
     @asset = Asset.find_or_create_by(symbol: params['symbol'].upcase)
     @new_search = @user.watchlists.find_or_create_by(asset_id: @asset.id)
 
