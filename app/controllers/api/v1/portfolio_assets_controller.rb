@@ -1,7 +1,20 @@
 class Api::V1::PortfolioAssetsController < ApplicationController
+  before_action :requires_login
+
   def index
-    @portfolio_assets = PortfolioAsset.all
-    render json: @portfolio_assets
+    if (params[:user_id])
+      @portfolio_assets = User.find(params[:user_id]).portfolio_assets
+      @symbols = []
+
+      @portfolio_assets.each do |history|
+        @symbols << [[:id, history.id], [:symbol, Asset.all.find{|asset| asset.id == history.asset_id}.symbol]].to_h
+      end
+
+      render json: @symbols
+    else
+      @portfolio_assets = PortfolioAsset.all
+      render json: @portfolio_assets
+    end
   end
 
   def show
@@ -14,10 +27,14 @@ class Api::V1::PortfolioAssetsController < ApplicationController
   end
 
   def create
-    @user = User.find(1)
-    @asset = Asset.find_or_create_by(symbol: params['symbol'].upcase)
+    @user = User.find(params[:user_id])
+    @asset = Asset.find_or_create_by(symbol: params[:symbol].upcase)
     @portfolio_asset = @user.portfolio_assets.find_or_create_by(asset_id: @asset.id)
-    render json: @portfolio_asset
+
+    render json: {
+      id: @portfolio_asset.id,
+      symbol: params[:symbol].upcase
+    }
   end
 
   def update
@@ -30,9 +47,9 @@ class Api::V1::PortfolioAssetsController < ApplicationController
   end
 
   def destroy
-    @portfolio_asset = User.find(params[:id]).portfolio_assets
-    @asset = Asset.find_by(symbol: params['symbol'])
-    @symbol = @portfolio_asset.find_by(asset_id: @asset.id)
+    @symbol = PortfolioAsset.find(params[:id])
     @symbol.destroy
+
+    render json: {}
   end
 end

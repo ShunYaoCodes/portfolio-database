@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
       resources :users do
         resources :watchlists
+        resources :portfolio_assets
       end
     end
   end
