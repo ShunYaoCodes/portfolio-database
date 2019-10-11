@@ -6,8 +6,12 @@ class Api::V1::PortfolioAssetsController < ApplicationController
       @portfolio_assets = User.find(params[:user_id]).portfolio_assets
       @symbols = []
 
-      @portfolio_assets.each do |history|
-        @symbols << [[:id, history.id], [:symbol, Asset.all.find{|asset| asset.id == history.asset_id}.symbol]].to_h
+      @portfolio_assets.each do |portfolio_asset|
+        @symbols << [
+          [:id, portfolio_asset.id], 
+          [:symbol, Asset.all.find{|asset| asset.id == portfolio_asset.asset_id}.symbol], 
+          [:position_type, portfolio_asset.position_type]
+        ].to_h
       end
 
       render json: @symbols
@@ -38,12 +42,9 @@ class Api::V1::PortfolioAssetsController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
-    @asset = Asset.find_by(symbol: params['symbol'].upcase)
-    @portfolio_asset = @user.portfolio_assets.find_by(asset_id: @asset.id)
+    @portfolio_asset = PortfolioAsset.find(params[:id])
     @portfolio_asset[:position_type] = params['position_type']
     @portfolio_asset.save
-    #byebug
   end
 
   def destroy
