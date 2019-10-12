@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :users do
         resources :watchlists
         resources :portfolio_assets
+        resources :search_histories
       end
     end
   end
