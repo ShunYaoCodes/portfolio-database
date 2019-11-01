@@ -3,18 +3,22 @@ class Api::V1::PortfolioAssetsController < ApplicationController
 
   def index
     if (params[:user_id])
-      @portfolio_assets = User.find(params[:user_id]).portfolio_assets
-      @symbols = []
+      @user = User.find(params[:user_id])
+      @portfolio_assets = @user.portfolio_assets
+      @positions = []
 
       @portfolio_assets.each do |portfolio_asset|
-        @symbols << [
+        @positions << [
           [:id, portfolio_asset.id], 
           [:symbol, Asset.all.find{|asset| asset.id == portfolio_asset.asset_id}.symbol], 
           [:position_type, portfolio_asset.position_type]
         ].to_h
       end
 
-      render json: @symbols
+      render json: {
+        positions: @positions,
+        investment_amount: @user.investment_amount
+      }
     else
       @portfolio_assets = PortfolioAsset.all
       render json: @portfolio_assets
@@ -22,12 +26,12 @@ class Api::V1::PortfolioAssetsController < ApplicationController
   end
 
   def show
-    @portfolio_asset = User.find(params[:id]).portfolio_assets
-    @symbols = []
-    @portfolio_asset.each do |history|
-      @symbols << {symbol: Asset.all.find{|asset| asset.id == history.asset_id}.symbol, position_type: history.position_type}
+    @portfolio_assets = User.find(params[:id]).portfolio_assets
+    @positions = []
+    @portfolio_assets.each do |history|
+      @positions << {symbol: Asset.all.find{|asset| asset.id == history.asset_id}.symbol, position_type: history.position_type}
     end
-    render json: @symbols
+    render json: @positions
   end
 
   def create
@@ -43,13 +47,13 @@ class Api::V1::PortfolioAssetsController < ApplicationController
 
   def update
     @portfolio_asset = PortfolioAsset.find(params[:id])
-    @portfolio_asset[:position_type] = params['position_type']
+    @portfolio_asset[:position_type] = params[:position_type]
     @portfolio_asset.save
   end
 
   def destroy
-    @symbol = PortfolioAsset.find(params[:id])
-    @symbol.destroy
+    @position = PortfolioAsset.find(params[:id])
+    @position.destroy
 
     render json: {}
   end
