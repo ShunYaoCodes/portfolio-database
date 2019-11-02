@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :requires_login, only: [:index, :show]
-  before_action :requires_user_match, only: [:index, :show]
+  before_action :requires_login, only: [:index, :show, :update]
+  before_action :requires_user_match, only: [:index, :show, :update]
 
   def index
     @users = User.all
@@ -36,6 +36,9 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def update
+    @user = User.find(params[:id])
+    @user.investment_amount = params[:investment_amount]
+    @user.save!(validate: false)
   end
 
   def destroy

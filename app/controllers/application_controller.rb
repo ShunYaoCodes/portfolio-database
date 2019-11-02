@@ -43,7 +43,7 @@ class ApplicationController < ActionController::API
     end
 
     def requires_user_match
-        @user = User.find_by(id: params[:user_id])
+        @user = User.find_by(id: params[:user_id] ? params[:user_id] : params[:id])
         # byebug
         if @user.id != get_decoded_token[0]["id"]
             render json: {
