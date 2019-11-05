@@ -22,12 +22,10 @@ class ApplicationController < ActionController::API
         token = get_token()
         begin
             decoded_token = JWT.decode token, get_secret(), true, { algorithm: 'HS256' }
-            # Check decoded_token payload for expiration date.
         rescue JWT::DecodeError
-            return {error: "Invalid Token"}
+            return nil
         rescue JWT::ExpiredSignature
-            # Handle expired token, e.g. logout user or deny access
-            return {error: "Token Expired"}
+            return nil
         end
 
         decoded_token
@@ -38,26 +36,19 @@ class ApplicationController < ActionController::API
     end
 
     def requires_login
-        if decode_error = get_decoded_token[:error]
-            case decode_error
-            when "Invalid Token"
-                render json: {
-                message: "Invalid Token"
-                }, status: :unauthorized
-            when "Token Expired"
-                render json: {
-                message: "Token Expired"
-                }, status: :unauthorized
-            end
+        if !is_authenticated?
+            render json: {
+            message: "Invalid Token or Token Expired"
+            }, status: :unauthorized
         end
     end
 
     def requires_user_match
         @user = User.find_by(id: params[:user_id] ? params[:user_id] : params[:id])
-        # byebug
+        
         if @user.id != get_decoded_token[0]["id"]
             render json: {
-            message: "Not your snacks!!!!!! Treat yourself!"
+            message: "User Doesn't Match"
             }, status: :unauthorized
         end
     end
