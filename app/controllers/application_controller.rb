@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
 
     def generate_token
         payload = {
-            username: @user.username,
+            email: @user.email,
             id: @user.id,
             exp: 2.hours.from_now.to_i
         }

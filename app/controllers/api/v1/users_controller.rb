@@ -17,7 +17,9 @@ class Api::V1::UsersController < ApplicationController
   def create
     @user = User.new
 
-    @user.username = params[:username]
+    @user.email = params[:email]
+    @user.first_name = params[:first_name]
+    @user.last_name = params[:last_name]
     @user.password = params[:password]
     @user.password_confirmation = params[:password_confirmation]
 
