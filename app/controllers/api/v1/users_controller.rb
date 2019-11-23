@@ -18,8 +18,8 @@ class Api::V1::UsersController < ApplicationController
     @user = User.new
 
     @user.email = params[:email]
-    @user.first_name = params[:first_name]
-    @user.last_name = params[:last_name]
+    @user.first_name = params[:first_name].downcase.capitalize
+    @user.last_name = params[:last_name].downcase.capitalize
     @user.password = params[:password]
     @user.password_confirmation = params[:password_confirmation]
 
