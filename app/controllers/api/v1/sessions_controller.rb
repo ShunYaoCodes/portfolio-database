@@ -12,7 +12,9 @@ class Api::V1::SessionsController < ApplicationController
           }
         else
           render json: {
-            errors: "Those credentials don't match anything we have in our database"
+            error: {
+              message: "Credentials don't match",
+            }
           }, status: :unauthorized
         end
     end
