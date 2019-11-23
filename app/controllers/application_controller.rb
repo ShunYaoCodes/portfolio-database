@@ -7,7 +7,7 @@ class ApplicationController < ActionController::API
         payload = {
             email: @user.email,
             id: @user.id,
-            exp: 2.hours.from_now.to_i
+            exp: 2.days.from_now.to_i
         }
 
         # IMPORTANT: set nil as password parameter
